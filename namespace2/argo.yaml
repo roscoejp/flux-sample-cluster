@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kustomize-example
+spec:
+  projec: default
+  source:
+    path: namespace2/
+    repoURL: https://github.com/roscoejp/flux-sample-cluster
+    targetRevision: HEAD
+  destination:
+    namespace: namespace2
+    server: https://kubernetes.default.svc
