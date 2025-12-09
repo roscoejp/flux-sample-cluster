@@ -19,6 +19,9 @@ spec:
     metadata:
       name: "{{path[1]}}-{{values.component_type}}"
     spec:
+      destination:
+        server: https://kubernetes.default.svc # ArgoCD's own cluster
+        namespace: "{{path[1]}}" # should be /namespaces[0]/namespace1[1]
       project: default
       sources:
         - repoURL: "{{kafka.values.repoURL}}"
@@ -34,6 +37,7 @@ spec:
               suffix: "{{values.component_type}}"
             valueFiles:
               - $external_values/{{path.basenameNormalized}}/requirements/{{values.component_type}}-values.yaml
-      destination:
-        server: https://kubernetes.default.svc # ArgoCD's own cluster
-        namespace: "{{path[1]}}" # should be /namespaces[0]/namespace1[1]
+      syncPolicy:
+        syncOptions:
+          - PrunePropagationPolicy=undefined
+          - CreateNamespace=true
