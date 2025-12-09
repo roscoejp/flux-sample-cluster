@@ -21,7 +21,7 @@ spec:
     spec:
       destination:
         server: https://kubernetes.default.svc # ArgoCD's own cluster
-        namespace: "{{path[1]}}" # should be /namespaces[0]/namespace1[1]
+        namespace: "{{index .path.segments 1}}" # should be /namespaces[0]/namespace1[1]
       project: default
       sources:
         - repoURL: "{{application.values.repoURL}}"
